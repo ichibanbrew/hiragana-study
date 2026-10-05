@@ -29,9 +29,7 @@ export class QuizUI {
       statAccuracy: document.getElementById('stat-accuracy'),
       statAnswered: document.getElementById('stat-answered'),
 
-      // Active pool summary
-      activeRowsSummary: document.getElementById('active-rows-summary'),
-      activePoolBar: document.getElementById('active-pool-bar'),
+      // Row count in top header
       headerRowCount: document.getElementById('header-row-count'),
 
       // Row Selection Modal
@@ -66,14 +64,14 @@ export class QuizUI {
     this.setupTheme();
     this.setupEventListeners();
     this.renderStats();
-    this.renderActiveRowsSummary();
+    this.updateHeaderRowCount();
     this.buildCategoriesModal();
     this.nextQuestion();
 
     // Subscribe to state changes
     stateManager.subscribe(() => {
       this.renderStats();
-      this.renderActiveRowsSummary();
+      this.updateHeaderRowCount();
       this.updateMistakesBadge();
     });
   }
@@ -137,15 +135,6 @@ export class QuizUI {
 
     // Row selection modal triggers
     this.elements.btnOpenRows.addEventListener('click', () => this.openRowsModal());
-    if (this.elements.activePoolBar) {
-      this.elements.activePoolBar.addEventListener('click', () => this.openRowsModal());
-      this.elements.activePoolBar.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.code === 'Space') {
-          e.preventDefault();
-          this.openRowsModal();
-        }
-      });
-    }
     this.elements.btnCloseRowsModal.addEventListener('click', () => this.closeRowsModal());
     this.elements.rowsModal.addEventListener('click', (e) => {
       if (e.target === this.elements.rowsModal) this.closeRowsModal();
@@ -337,41 +326,12 @@ export class QuizUI {
   }
 
   /**
-   * Render Active Row Summary Chips
+   * Update row count badge in top header
    */
-  renderActiveRowsSummary() {
+  updateHeaderRowCount() {
     const selectedIds = new Set(stateManager.getSelectedRowIds());
     const selectedRows = HIRAGANA_ROWS.filter(r => selectedIds.has(r.id));
-    const charsCount = getCharactersByRowIds(stateManager.getSelectedRowIds()).length;
-
     this.elements.headerRowCount.textContent = `(${selectedRows.length})`;
-
-    this.elements.activeRowsSummary.innerHTML = '';
-
-    if (selectedRows.length === HIRAGANA_ROWS.length) {
-      const tag = document.createElement('span');
-      tag.className = 'pool-tag';
-      tag.textContent = `All Rows (${charsCount} characters)`;
-      this.elements.activeRowsSummary.appendChild(tag);
-      return;
-    }
-
-    // Display first few row tags, then "+N more"
-    const displayLimit = 4;
-    selectedRows.slice(0, displayLimit).forEach(row => {
-      const tag = document.createElement('span');
-      tag.className = 'pool-tag';
-      tag.textContent = row.name;
-      this.elements.activeRowsSummary.appendChild(tag);
-    });
-
-    if (selectedRows.length > displayLimit) {
-      const extraTag = document.createElement('span');
-      extraTag.className = 'pool-tag';
-      extraTag.style.opacity = '0.75';
-      extraTag.textContent = `+${selectedRows.length - displayLimit} more (${charsCount} chars)`;
-      this.elements.activeRowsSummary.appendChild(extraTag);
-    }
   }
 
   /**
