@@ -235,6 +235,7 @@ export class QuizUI {
       btn.dataset.romaji = optRomaji;
 
       const textSpan = document.createElement('span');
+      textSpan.className = 'option-text';
       textSpan.textContent = optRomaji;
 
       const badge = document.createElement('span');

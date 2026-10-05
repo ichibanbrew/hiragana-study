@@ -366,11 +366,11 @@ body {
   font-weight: 500;
 }
 
-/* 5 Option Buttons Grid */
+/* 5 Option Buttons Single-Row Grid */
 .options-container {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.65rem;
 }
 
 .option-btn {
@@ -378,12 +378,13 @@ body {
   border: 2px solid var(--border-color);
   color: var(--text-primary);
   border-radius: var(--radius-md);
-  padding: 0.95rem 1.25rem;
-  font-size: 1.2rem;
-  font-weight: 700;
+  padding: 1.1rem 0.35rem;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 88px;
   cursor: pointer;
   box-shadow: var(--shadow-sm);
   transition: all var(--transition-fast);
@@ -395,7 +396,7 @@ body {
 .option-btn:hover:not(:disabled) {
   background: var(--bg-hover);
   border-color: var(--accent-primary);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
 
@@ -408,17 +409,25 @@ body {
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.35);
 }
 
+.option-text {
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  word-break: break-word;
+}
+
 .key-badge {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   color: var(--text-muted);
-  width: 26px;
-  height: 26px;
-  border-radius: 6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 700;
   font-family: var(--font-sans);
 }
@@ -722,9 +731,24 @@ body {
     font-size: 4.5rem;
   }
 
+  .options-container {
+    gap: 0.4rem;
+  }
+
   .option-btn {
-    padding: 0.85rem 1rem;
-    font-size: 1.1rem;
+    padding: 0.75rem 0.2rem;
+    min-height: 72px;
+    border-radius: var(--radius-sm);
+  }
+
+  .option-text {
+    font-size: 1rem;
+  }
+
+  .key-badge {
+    width: 18px;
+    height: 18px;
+    font-size: 0.68rem;
   }
 
   .rows-grid {
