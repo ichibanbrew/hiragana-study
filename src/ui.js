@@ -31,8 +31,8 @@ export class QuizUI {
 
       // Active pool summary
       activeRowsSummary: document.getElementById('active-rows-summary'),
+      activePoolBar: document.getElementById('active-pool-bar'),
       headerRowCount: document.getElementById('header-row-count'),
-      btnEditRowsLink: document.getElementById('btn-edit-rows-link'),
 
       // Row Selection Modal
       rowsModal: document.getElementById('rows-modal'),
@@ -137,7 +137,15 @@ export class QuizUI {
 
     // Row selection modal triggers
     this.elements.btnOpenRows.addEventListener('click', () => this.openRowsModal());
-    this.elements.btnEditRowsLink.addEventListener('click', () => this.openRowsModal());
+    if (this.elements.activePoolBar) {
+      this.elements.activePoolBar.addEventListener('click', () => this.openRowsModal());
+      this.elements.activePoolBar.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.code === 'Space') {
+          e.preventDefault();
+          this.openRowsModal();
+        }
+      });
+    }
     this.elements.btnCloseRowsModal.addEventListener('click', () => this.closeRowsModal());
     this.elements.rowsModal.addEventListener('click', (e) => {
       if (e.target === this.elements.rowsModal) this.closeRowsModal();
