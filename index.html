@@ -13,20 +13,23 @@
   <header class="app-header">
     <div class="brand">
       <div class="brand-icon">あ</div>
-      <div>
-        <h1>Hiragana Study</h1>
+      <div class="brand-title-wrap">
+        <h1>Hiragana <span class="brand-sub">Study</span></h1>
       </div>
-      <span class="badge">5-Choice</span>
+      <span class="badge badge-desktop-only">5-Choice</span>
     </div>
 
     <div class="header-controls">
       <button id="btn-open-mistakes" class="btn-pill" title="Review Mistakes">
-        <span>⚠️ Mistakes</span>
+        <span class="btn-icon-part">⚠️</span>
+        <span class="btn-text-part">Mistakes</span>
         <span id="mistakes-count-badge" style="display:none; background: var(--error-border); color: #fff; font-size: 0.7rem; padding: 0.1rem 0.4rem; border-radius: 9999px;">0</span>
       </button>
 
       <button id="btn-open-rows" class="btn-pill primary" title="Select Rows to Practice">
-        <span>⚙️ Filter Rows</span>
+        <span class="btn-icon-part">⚙️</span>
+        <span class="btn-text-part-desktop">Filter Rows</span>
+        <span class="btn-text-part-mobile">Rows</span>
         <span id="header-row-count" style="opacity: 0.85; font-size: 0.8rem;">(10)</span>
       </button>
 

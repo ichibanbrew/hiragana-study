@@ -96,6 +96,7 @@ body {
   flex-direction: column;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 /* App Header */
@@ -109,12 +110,15 @@ body {
   position: sticky;
   top: 0;
   z-index: 40;
+  white-space: nowrap;
 }
 
 .brand {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .brand-icon {
@@ -127,10 +131,16 @@ body {
   font-weight: 800;
 }
 
+.brand-title-wrap {
+  display: flex;
+  align-items: baseline;
+}
+
 .brand h1 {
   font-size: 1.15rem;
   font-weight: 700;
   letter-spacing: -0.02em;
+  white-space: nowrap;
 }
 
 .brand .badge {
@@ -140,12 +150,23 @@ body {
   padding: 0.15rem 0.5rem;
   border-radius: var(--radius-full);
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .header-controls {
   display: flex;
   align-items: center;
   gap: 0.6rem;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.btn-text-part-mobile {
+  display: none;
+}
+
+.btn-text-part-desktop {
+  display: inline;
 }
 
 .btn-icon {
@@ -715,7 +736,59 @@ body {
 /* Responsive queries */
 @media (max-width: 600px) {
   .app-header {
-    padding: 0.75rem 1rem;
+    padding: 0.55rem 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .brand {
+    gap: 0.45rem;
+  }
+
+  .brand-icon {
+    font-size: 1.4rem;
+  }
+
+  .brand h1 {
+    font-size: 1.05rem;
+  }
+
+  .badge-desktop-only {
+    display: none;
+  }
+
+  .header-controls {
+    gap: 0.35rem;
+  }
+
+  /* Compact Mistakes Button: icon + count badge */
+  #btn-open-mistakes {
+    padding: 0.4rem 0.55rem;
+  }
+
+  #btn-open-mistakes .btn-text-part {
+    display: none;
+  }
+
+  /* Compact Filter Rows Button */
+  .btn-text-part-desktop {
+    display: none;
+  }
+
+  .btn-text-part-mobile {
+    display: inline;
+  }
+
+  #btn-open-rows {
+    padding: 0.4rem 0.65rem;
+    font-size: 0.8rem;
+  }
+
+  /* Compact Theme Switch button */
+  #btn-toggle-theme {
+    width: 36px;
+    height: 36px;
+    font-size: 0.95rem;
+    flex-shrink: 0;
   }
 
   .stats-ribbon {
@@ -753,5 +826,39 @@ body {
 
   .rows-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Ultra-narrow devices (<= 380px) */
+@media (max-width: 380px) {
+  .app-header {
+    padding: 0.45rem 0.45rem;
+  }
+
+  .brand-sub {
+    display: none;
+  }
+
+  .brand h1 {
+    font-size: 0.95rem;
+  }
+
+  .btn-text-part-mobile {
+    display: none;
+  }
+
+  #btn-open-rows {
+    padding: 0.35rem 0.45rem;
+    font-size: 0.75rem;
+  }
+
+  #btn-open-mistakes {
+    padding: 0.35rem 0.45rem;
+  }
+
+  #btn-toggle-theme {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
   }
 }

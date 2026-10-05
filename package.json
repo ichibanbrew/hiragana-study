@@ -1,5 +1,5 @@
 {
-  "name": "japanese-hiragana-study",
+  "name": "hiragana-study",
   "version": "1.0.0",
   "description": "Interactive Japanese Hiragana study web app with customizable row selection and 5-choice quizzes",
   "type": "module",
