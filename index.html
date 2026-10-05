@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Japanese Hiragana Practice - 5-Choice Study</title>
+  <meta name="description" content="Learn Japanese Hiragana with custom row selection and 5-choice multiple-choice quizzes.">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>あ</text></svg>">
+</head>
+<body>
+  <!-- Application Header -->
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-icon">あ</div>
+      <div>
+        <h1>Hiragana Study</h1>
+      </div>
+      <span class="badge">5-Choice</span>
+    </div>
+
+    <div class="header-controls">
+      <button id="btn-open-mistakes" class="btn-pill" title="Review Mistakes">
+        <span>⚠️ Mistakes</span>
+        <span id="mistakes-count-badge" style="display:none; background: var(--error-border); color: #fff; font-size: 0.7rem; padding: 0.1rem 0.4rem; border-radius: 9999px;">0</span>
+      </button>
+
+      <button id="btn-open-rows" class="btn-pill primary" title="Select Rows to Practice">
+        <span>⚙️ Filter Rows</span>
+        <span id="header-row-count" style="opacity: 0.85; font-size: 0.8rem;">(10)</span>
+      </button>
+
+      <button id="btn-toggle-theme" class="btn-icon" title="Toggle Theme" aria-label="Toggle Theme">
+        🌙
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="app-container">
+    <!-- Stats Ribbon -->
+    <section class="stats-ribbon" aria-label="Study Statistics">
+      <div class="stat-card">
+        <span class="stat-label">Streak</span>
+        <div class="stat-value streak">
+          <span>🔥</span>
+          <span id="stat-current-streak">0</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Best</span>
+        <div class="stat-value">
+          <span>⭐</span>
+          <span id="stat-best-streak">0</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Accuracy</span>
+        <div class="stat-value accuracy">
+          <span id="stat-accuracy">100%</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Answered</span>
+        <div class="stat-value">
+          <span id="stat-answered">0</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Active Rows Summary Bar -->
+    <div class="active-pool-bar">
+      <div class="pool-tags" id="active-rows-summary">
+        <!-- Rendered dynamically -->
+      </div>
+      <button id="btn-edit-rows-link" class="btn-pill" style="font-size: 0.75rem; padding: 0.25rem 0.6rem;">Edit Rows</button>
+    </div>
+
+    <!-- Quiz Section -->
+    <section class="quiz-section" aria-label="Hiragana Question">
+      <!-- Character Display Card -->
+      <div class="character-card" id="character-card">
+        <div class="card-top-info">
+          <span class="row-badge" id="card-row-badge">A-row</span>
+          <button class="audio-btn" id="btn-audio-speak" title="Pronounce character" aria-label="Pronounce character">
+            🔊
+          </button>
+        </div>
+
+        <div class="kana-display" id="card-kana-display">あ</div>
+
+        <div class="prompt-hint">Select the correct reading</div>
+      </div>
+
+      <!-- 5 Multiple Choice Options Grid -->
+      <div class="options-container" id="options-container" role="group" aria-label="Multiple choice options">
+        <!-- 5 Option buttons will be injected here -->
+      </div>
+
+      <!-- Quiz Footer & Keyboard Shortcuts -->
+      <div class="quiz-footer">
+        <div class="shortcuts-legend">
+          <span>Shortcuts:</span>
+          <span class="keyboard-key">1</span>–<span class="keyboard-key">5</span>
+          <span>select</span>
+          <span class="keyboard-key">Space</span>
+          <span>next</span>
+        </div>
+
+        <div style="display: flex; gap: 0.5rem; align-items: center;">
+          <label style="font-size: 0.78rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.35rem; cursor: pointer;">
+            <input type="checkbox" id="toggle-auto-advance" checked style="accent-color: var(--accent-primary);">
+            Auto-advance
+          </label>
+          <button id="btn-next-question" class="btn-pill" style="display: none;">Next →</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Row Selection Modal -->
+  <div class="modal-overlay" id="rows-modal" role="dialog" aria-modal="true" aria-labelledby="modal-rows-title">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">
+          <h2 id="modal-rows-title">Select Hiragana Rows</h2>
+          <p>Choose which character sets you want included in your quiz</p>
+        </div>
+        <button class="btn-icon" id="btn-close-rows-modal" aria-label="Close modal">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Quick Select Actions -->
+        <div class="modal-actions">
+          <button id="btn-select-basic" class="btn-pill">Basic 46 (Gojūon)</button>
+          <button id="btn-select-all" class="btn-pill">Select All</button>
+          <button id="btn-clear-all" class="btn-pill">Clear All</button>
+        </div>
+
+        <!-- Dynamic Category & Row List -->
+        <div id="categories-container" style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <!-- Dynamically populated rows -->
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="selection-count-badge" id="modal-selection-count">
+          46 characters selected (10 rows)
+        </div>
+        <button id="btn-apply-rows" class="btn-pill primary">Save & Practice</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mistakes Review Modal -->
+  <div class="modal-overlay" id="mistakes-modal" role="dialog" aria-modal="true" aria-labelledby="modal-mistakes-title">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">
+          <h2 id="modal-mistakes-title">Session Mistakes</h2>
+          <p>Review characters you missed during this study session</p>
+        </div>
+        <button class="btn-icon" id="btn-close-mistakes-modal" aria-label="Close modal">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div id="mistakes-list" class="mistakes-list">
+          <!-- Dynamically populated or empty message -->
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="btn-reset-stats" class="btn-pill" style="color: var(--error-border);">Reset All Stats</button>
+        <button id="btn-close-mistakes" class="btn-pill primary">Back to Quiz</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>

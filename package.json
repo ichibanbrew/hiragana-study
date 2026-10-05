@@ -1,0 +1,14 @@
+{
+  "name": "japanese-hiragana-study",
+  "version": "1.0.0",
+  "description": "Interactive Japanese Hiragana study web app with customizable row selection and 5-choice quizzes",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "keywords": ["japanese", "hiragana", "study", "flashcards", "quiz"],
+  "author": "",
+  "license": "MIT"
+}
