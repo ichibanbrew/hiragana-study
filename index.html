@@ -76,7 +76,7 @@
       <!-- Character Display Card -->
       <div class="character-card" id="character-card">
         <div class="card-top-info">
-          <span class="row-badge" id="card-row-badge">A-row</span>
+          <span class="row-badge" id="card-row-badge" style="display: none;">A-row</span>
           <button class="audio-btn" id="btn-audio-speak" title="Pronounce character" aria-label="Pronounce character">
             🔊
           </button>
@@ -102,7 +102,11 @@
           <span>next</span>
         </div>
 
-        <div style="display: flex; gap: 0.5rem; align-items: center;">
+        <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+          <label style="font-size: 0.78rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.35rem; cursor: pointer;">
+            <input type="checkbox" id="toggle-row-hint" style="accent-color: var(--accent-primary);">
+            Row hint
+          </label>
           <label style="font-size: 0.78rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.35rem; cursor: pointer;">
             <input type="checkbox" id="toggle-auto-advance" checked style="accent-color: var(--accent-primary);">
             Auto-advance

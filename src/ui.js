@@ -22,6 +22,7 @@ export class QuizUI {
       optionsContainer: document.getElementById('options-container'),
       btnNextQuestion: document.getElementById('btn-next-question'),
       toggleAutoAdvance: document.getElementById('toggle-auto-advance'),
+      toggleRowHint: document.getElementById('toggle-row-hint'),
 
       // Stats
       statCurrentStreak: document.getElementById('stat-current-streak'),
@@ -112,6 +113,15 @@ export class QuizUI {
         this.elements.btnNextQuestion.style.display = 'inline-flex';
       }
     });
+
+    // Row hint toggle
+    if (this.elements.toggleRowHint) {
+      this.elements.toggleRowHint.checked = !!stateManager.state.settings.showRowHint;
+      this.elements.toggleRowHint.addEventListener('change', (e) => {
+        stateManager.updateSettings({ showRowHint: e.target.checked });
+        this.elements.cardRowBadge.style.display = e.target.checked ? 'inline-block' : 'none';
+      });
+    }
 
     // Keyboard shortcuts (1-5, Space, Enter)
     window.addEventListener('keydown', (e) => {
@@ -206,10 +216,6 @@ export class QuizUI {
     try {
       this.currentQuestion = generateQuestion(selectedRows, prevKana);
       this.renderQuestion(this.currentQuestion);
-
-      if (stateManager.state.settings.voiceEnabled) {
-        speakKana(this.currentQuestion.target.kana);
-      }
     } catch (e) {
       console.error(e);
       this.openRowsModal();
@@ -222,6 +228,7 @@ export class QuizUI {
   renderQuestion(question) {
     this.elements.cardKanaDisplay.textContent = question.target.kana;
     this.elements.cardRowBadge.textContent = `${question.target.rowName}`;
+    this.elements.cardRowBadge.style.display = stateManager.state.settings.showRowHint ? 'inline-block' : 'none';
 
     this.elements.optionsContainer.innerHTML = '';
 

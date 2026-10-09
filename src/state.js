@@ -19,7 +19,8 @@ export function getDefaultState() {
       autoAdvance: true,
       soundEnabled: true,
       voiceEnabled: true,
-      theme: 'dark' // 'dark' | 'light'
+      theme: 'dark', // 'dark' | 'light'
+      showRowHint: false
     }
   };
 }

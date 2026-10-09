@@ -11,4 +11,5 @@ test('getDefaultState returns valid initial state', () => {
   assert.equal(state.stats.currentStreak, 0);
   assert.equal(state.stats.bestStreak, 0);
   assert.equal(typeof state.mistakes, 'object');
+  assert.equal(state.settings.showRowHint, false, 'Default showRowHint should be false');
 });
