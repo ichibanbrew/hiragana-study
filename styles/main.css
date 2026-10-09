@@ -143,16 +143,6 @@ body {
   white-space: nowrap;
 }
 
-.brand .badge {
-  font-size: 0.75rem;
-  background-color: var(--accent-light);
-  color: var(--accent-primary);
-  padding: 0.15rem 0.5rem;
-  border-radius: var(--radius-full);
-  font-weight: 600;
-  white-space: nowrap;
-}
-
 .header-controls {
   display: flex;
   align-items: center;
@@ -723,10 +713,6 @@ body {
 
   .brand h1 {
     font-size: 1.05rem;
-  }
-
-  .badge-desktop-only {
-    display: none;
   }
 
   .header-controls {
