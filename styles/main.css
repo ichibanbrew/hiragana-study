@@ -474,6 +474,13 @@ body {
   color: var(--text-secondary);
 }
 
+.quiz-footer-controls {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 /* Modal / Drawer for Row Selection */
 .modal-overlay {
   position: fixed;
@@ -807,6 +814,14 @@ body {
 
   .rows-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .shortcuts-legend {
+    display: none;
+  }
+
+  .quiz-footer {
+    justify-content: center;
   }
 }
 
